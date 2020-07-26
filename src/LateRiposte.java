@@ -1,9 +1,22 @@
-public class LateRiposte
-{
+public class LateRiposte {
     public static void main(String[] args)
     {
+
+    //Init listeners
+    MouseListener.initListener();
+    KeyboardListener.initKeyboard();
+
+    //Init GUI
+    ConsoleGUI.initFrame();
+
+    }
+
+
+    public void initListeners()
+    {
         MouseListener.initListener();
-        ConsoleGUI.initFrame();
+        KeyboardListener.initKeyboard();
     }
 
 }
+

@@ -1,8 +1,10 @@
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
+import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseInputListener;
 
+import java.lang.annotation.Native;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -10,8 +12,8 @@ import java.util.logging.Logger;
 public class MouseListener implements NativeMouseInputListener {
 
     private int mousePressed;
-    private int mouseBefore;
-    private long startTime;
+    private static int mouseBefore;
+    private static long startTime;
 
     public void nativeMouseClicked(NativeMouseEvent e)
     {
@@ -63,7 +65,6 @@ public class MouseListener implements NativeMouseInputListener {
     }
 
     public void riposteTime() {
-
         if (mousePressed == 2) //Parry
         {
             startTime = System.currentTimeMillis();
@@ -75,13 +76,16 @@ public class MouseListener implements NativeMouseInputListener {
 
             long endTime = System.currentTimeMillis();
             long time = endTime - startTime;
-            System.out.println("Time: " + time + "ms");
-
+            System.out.println("LMB - Time: " + time + "ms");
 
             mouseBefore = 0;
             startTime = 0;
-            endTime = 0;
-            time = 0;
         }
     }
+        public static int getMouseBefore(){return mouseBefore;}
+        public static void setMouseBefore(int setMouseBefore){mouseBefore = setMouseBefore;}
+
+        public static long getStartTime(){return startTime;}
+        public static void setStartTime(int setStartTime){startTime = setStartTime;}
+
 }

@@ -3,29 +3,25 @@ import org.jnativehook.NativeHookException;
 import org.jnativehook.mouse.NativeMouseEvent;
 import org.jnativehook.mouse.NativeMouseInputListener;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class GlobalMouseListenerExample implements NativeMouseInputListener {
-    //
+public class MouseListener implements NativeMouseInputListener {
+
     private int mousePressed;
     private int mouseBefore;
     private long startTime;
-    private long endTime;
-    private long time;
 
-    public void nativeMouseClicked(NativeMouseEvent e) {
+    public void nativeMouseClicked(NativeMouseEvent e)
+    {
         //System.out.println("Mouse Clicked: " + e.getClickCount());
-
     }
 
     public void nativeMousePressed(NativeMouseEvent e) {
-        System.out.println("Mouse Pressed: " + e.getButton());
+        //System.out.println("Mouse Pressed: " + e.getButton());
         mousePressed = e.getButton();
-        lateRiposte();
+        riposteTime();
     }
 
     public void nativeMouseReleased(NativeMouseEvent e) {
@@ -40,7 +36,8 @@ public class GlobalMouseListenerExample implements NativeMouseInputListener {
         //System.out.println("Mouse Dragged: " + e.getX() + ", " + e.getY());
     }
 
-    public static void main(String[] args) {
+    public static void initListener()
+    {
         try {
             GlobalScreen.registerNativeHook();
         } catch (NativeHookException ex) {
@@ -51,7 +48,7 @@ public class GlobalMouseListenerExample implements NativeMouseInputListener {
         }
 
         // Construct the example object.
-        GlobalMouseListenerExample example = new GlobalMouseListenerExample();
+        MouseListener example = new MouseListener();
 
         // Add the appropriate listeners.
         GlobalScreen.addNativeMouseListener(example);
@@ -63,11 +60,9 @@ public class GlobalMouseListenerExample implements NativeMouseInputListener {
 
         // Don't forget to disable the parent handlers.
         logger.setUseParentHandlers(false);
-
-
     }
 
-    public void lateRiposte() {
+    public void riposteTime() {
 
         if (mousePressed == 2) //Parry
         {
@@ -78,9 +73,9 @@ public class GlobalMouseListenerExample implements NativeMouseInputListener {
         if (mousePressed == 1 && mouseBefore == 2) //LMB Swing
         {
 
-            endTime = System.currentTimeMillis();
-            time = endTime - startTime;
-            System.out.println(time);
+            long endTime = System.currentTimeMillis();
+            long time = endTime - startTime;
+            System.out.println("Time: " + time + "ms");
 
 
             mouseBefore = 0;

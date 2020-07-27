@@ -3,16 +3,17 @@ public class LateRiposte {
     {
 
     //Init listeners
-    MouseListener.initListener();
-    KeyboardListener.initKeyboard();
+    initListeners();
 
     //Init GUI
     ConsoleGUI.initFrame();
 
+
+        RiposteCheckGUI riposteCheckGUI = new RiposteCheckGUI();
     }
 
 
-    public void initListeners()
+    public static void initListeners()
     {
         MouseListener.initListener();
         KeyboardListener.initKeyboard();

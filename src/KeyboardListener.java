@@ -21,7 +21,11 @@ public class KeyboardListener implements NativeKeyListener {
             }
         } else
         {
-            riposteTime();
+            try {
+                riposteTime();
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            }
         }
     }
 
@@ -54,18 +58,21 @@ public class KeyboardListener implements NativeKeyListener {
         logger.setUseParentHandlers(false);
     }
 
-    public  void riposteTime()
-    {
+    public void riposteTime() throws InterruptedException {
+        long time = 0;
         // Dont need to reset keyPressed because mouseBefore gets reset so this never gets runs when just pressing E
         if(NativeKeyEvent.getKeyText(keyPressed).equals("E") && MouseListener.getMouseBefore() == 2)
         {
             long startTime = MouseListener.getStartTime();
             long endTime = System.currentTimeMillis();
-            long time = endTime - startTime;
+            time = endTime - startTime;
             System.out.println("Overhead - Time: " + time + "ms");
 
+            RiposteCheckGUI.checkRiposte(time);
             MouseListener.setMouseBefore(0);
             MouseListener.setStartTime(0);
+
         }
+
     }
 }

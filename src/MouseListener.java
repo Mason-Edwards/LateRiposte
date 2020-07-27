@@ -23,7 +23,11 @@ public class MouseListener implements NativeMouseInputListener {
     public void nativeMousePressed(NativeMouseEvent e) {
         //System.out.println("Mouse Pressed: " + e.getButton());
         mousePressed = e.getButton();
-        riposteTime();
+        try {
+            riposteTime();
+        } catch (InterruptedException interruptedException) {
+            interruptedException.printStackTrace();
+        }
     }
 
     public void nativeMouseReleased(NativeMouseEvent e) {
@@ -64,7 +68,7 @@ public class MouseListener implements NativeMouseInputListener {
         logger.setUseParentHandlers(false);
     }
 
-    public void riposteTime() {
+    public void riposteTime() throws InterruptedException {
         if (mousePressed == 2) //Parry
         {
             startTime = System.currentTimeMillis();
@@ -78,6 +82,7 @@ public class MouseListener implements NativeMouseInputListener {
             long time = endTime - startTime;
             System.out.println("LMB - Time: " + time + "ms");
 
+            RiposteCheckGUI.checkRiposte(time);
             mouseBefore = 0;
             startTime = 0;
         }
